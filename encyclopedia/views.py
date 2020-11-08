@@ -85,11 +85,13 @@ def create(request):
 					"form": SearchForm()
 					})
 			util.save_entry(create, textarea)
-			return render(request, "encyclopedia/create.html", {
+			return render(request, "encyclopedia/entries.html", {
 				"create": CreateForm(),
 				"form": SearchForm(),
 				"area": TextForm(),
-				"exist": exist
+				"exist": exist,
+				"title": create,
+				"titles": mark.convert(textarea)
 				})
 	else:
 		return render(request, "encyclopedia/create.html", {
@@ -133,7 +135,7 @@ def edit(request, title):
 		if form.is_valid():
 			entry = form.cleaned_data["textarea"]
 			util.save_entry(title, entry)
-			return render(request, "encyclopedia/newentry.html", {
+			return render(request, "encyclopedia/entries.html", {
 				"form": SearchForm(),
 				"titles": mark.convert(entry),
 				"title": title
